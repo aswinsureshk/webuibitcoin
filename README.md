@@ -25,8 +25,8 @@ The video description is visible here
 https://youtu.be/_A8oYoyxS_E
 
 
-Extra implementation (Bonus)
-----------------------------
+Extra implementation
+--------------------
 
 Run >  1> launch application and go to Home Screen -> User Screen -> Do Transaction
 	>  2> launch application and go to Home Screen -> Miner Screen -> Start Mine/Stop Mine
