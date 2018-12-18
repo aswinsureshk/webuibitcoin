@@ -1,0 +1,9 @@
+<html>
+<head>
+<div id="contentEditableText">
+    <%= for block <- @blockchain do %>
+      <div><%= raw(block.index) %></div>
+    <% end %>
+</div>
+</head>
+</html>

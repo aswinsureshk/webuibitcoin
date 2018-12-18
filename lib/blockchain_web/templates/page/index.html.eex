@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<%# <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<!-- Before that line -->
+ <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Mint Coin</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="http://localhost:4000/user">List of Users <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="http://localhost:4000/miner">List of Miners</a>
+      </li>
+  </div>
+</nav> %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Mint Coin Web UI</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="refresh" content="30">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>
+        function pageloadEvery(t) {
+        setTimeout('location.reload(true)', t);
+        }
+        <body onload="javascript:pageloadEvery(30000);">
+    </script>
+  <style>
+
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a  class="navbar-brand" href="">Welcome to Mint Coin Online Web Portal</a>
+    </div>
+  </div>
+</nav>
+  
+<div class="container text-center">    
+  <h3>Select Your Option</h3><br>
+  
+  <div class="row">
+  <a class="nav-link" href="http://localhost:4000/user">
+    <div class="well">
+      <p>Enter as User</p>
+    </div>
+    </a>
+    <a class="nav-link" href="http://localhost:4000/miner">
+    <div class="well"> 
+      <p>Enter as Miner</p>    
+    </div>
+    </a>
+    <a class="nav-link" href="http://localhost:4000/blockchaindetails">
+      <div class="well">
+       <p>Blockchain Details</p>
+      </div>
+      </a>
+      <a class="nav-link" href="http://localhost:4000/statistics">
+      <div class="well">
+       <p>View Statistics</p>
+      </div>
+      </a>
+      <div class="well">
+        <a class="nav-start-link" href='http://localhost:4000/startsimulation'>
+        Start Simulation 
+        </a>
+        /
+        <a class="nav-stop-link" href='http://localhost:4000/stopsimulation'>
+        Stop Simulation
+        </a>
+      </div>
+  </div>
+
+</div>
+
+ <style>
+     .top {
+        /*float: left;*/
+        margin-top: 60px;
+        margin-left:23%;
+
+      }
+
+      .left {
+        float: left;
+        margin-top: 100px;
+/*        margin-left:20%;
+*/
+      }
+
+      .right {
+        float: right;
+        margin-top: 100px;
+        /*margin-left:20%;*/
+      }
+
+  </style>
+<div class = "entire-thing">
+   
+    <div class="top">
+      <style>
+        p.ex1 {
+        margin-top: 60px;
+        width:100%;
+        }
+      </style>
+        <% 
+          unconfirmed_tx = @unconfirmed_tx
+          mined_tx = @mined_tx
+          pie_data = Poison.encode!([["Unconfirmed Transactions", length(unconfirmed_tx)],["Mined Transactions",length(mined_tx)]]) %>
+        <%= raw Chartkick.pie_chart pie_data, refresh: 60 %>
+     </div>
+     <div class = "left">
+        <p class = "ex2"> <b>Pending Transactions</b>
+            <style>
+                  table, th, td {
+                    border: 1px solid black;
+                    padding:0 15px 0 15px;
+                  }
+              </style>
+              <table>
+                <tr>
+                  <th>Time_Stamp</th>
+                  <th>From</th> 
+                  <th>To</th>
+                  <th>Amount</th>
+                </tr>
+                <div id="contentEditableText">
+                  <%= for transaction <- unconfirmed_tx do %>
+                  <tr>
+                  <td><%=transaction.timestamp%></td>
+                  <td><%=transaction.from%></td>
+                  <td><%=transaction.to%></td>
+                  <td><%=transaction.amount%></td>
+                  <% end %>
+                </tr>
+                </div>
+            </table>
+          </p>
+      </div>
+      <div class = "right">
+        <p class = "ex3"> <b>Transaction History (Mined)</b>
+            <style>
+                  table, th, td {
+                    border: 1px solid black;
+                    padding:0 15px 0 15px;
+                  }
+              </style>
+              <table>
+                <tr>
+                  <th>Time_Stamp</th>
+                  <th>From</th> 
+                  <th>To</th>
+                  <th>Amount</th>
+                </tr>
+                <div id="contentEditableText">
+                  <%= for transaction <- mined_tx do %>
+                  <tr>
+                  <td><%=transaction.timestamp%></td>
+                  <td><%=transaction.from%></td>
+                  <td><%=transaction.to%></td>
+                  <td><%=transaction.amount%></td>
+                  <% end %>
+                </tr>
+                </div>
+            </table>
+          </p>
+      </div>
+
+</div>
+
+</body>
+</html>
+
+</html>
+
+

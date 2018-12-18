@@ -1,0 +1,129 @@
+<html>
+<head>
+<title>Mint Coin Web UI</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 10;
+      border-radius: 5;
+    }
+    .homeButton{
+        position: absolute;
+        margin-top: 50px;
+        align: right;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a  class="navbar-brand" href="">Welcome to Mint Coin Miner Details Screen</a>
+    </div>
+  </div>
+</nav>
+
+
+
+<div>
+  <p id = "head" hidden>asdasd</p>
+</div>
+
+<div class="form-group">
+  <label for="selectNumber">Select the Miner Name: </label>
+  <select class="form-control" id="selectNumber" onchange=displayMinerScreen()>
+  </select>
+</div>
+          <script>
+          var select = document.getElementById("selectNumber"); 
+          var options = new Array();
+          options = '<%= @miners %>'; 
+          // Optional: Clear all existing options first:
+          select.innerHTML = "";
+          // Populate list with options:
+          for(var i = 0; i < options.length; i+=2) {
+              var opt = options[i]+ options[i+1] ;
+              select.innerHTML += "<option value=\"" + opt + "\">" + opt + "</option>";
+          }
+
+          selectedMinerScreen();
+
+          function displayMinerScreen() {
+              var x = document.getElementById("selectNumber").value;
+                document.getElementById("head").hidden = false;
+                document.getElementById("head").innerHTML = "Welcome Miner " + x;
+                document.getElementById("section").hidden = false;
+          }
+
+          function selectedMinerScreen() {
+              var x = '<%= @selected_miner %>';
+                document.getElementById("head").hidden = false;
+                document.getElementById("head").innerHTML = "Welcome Miner " + x;
+                document.getElementById("section").hidden = false;
+          }
+          </script>
+
+      <button onclick = getBalance()>Show Wallet Balance</button>
+      <button onclick = startMine()>Start Mining</button>
+      <button onclick = stopMine()>Stop Mining</button>
+      <button onclick = getBlockChain()>View Current Blockchain</button>
+      <button>Search</button>
+      <style>
+        table, th, td {
+          border: 1px solid black;
+          padding:0 15px 0 15px;
+        }
+      </style>
+      <h2>Blockchain</h2>
+      <table>
+      <tr>
+        <th>Index</th>
+        <th>Time_Stamp</th> 
+        <th>Hash_Value</th>
+        <th>Previous_Block_Hash</th>
+        <th>Nonce</th>
+      </tr>
+      <div id="contentEditableText">
+        <%= for block <- @blockchain do %>
+        <tr>
+        <td><%=block.index%></td>
+        <td><%=block.timestamp%></td>
+        <td><%=block.hash_value%></td>
+        <td><%=block.prev_block_hash%></td>
+        <td><%=block.nonce %></td>
+        <% end %>
+      </tr>
+      </div>
+      </table>
+      </div></b>
+      
+      <script>
+          function getBalance() {
+             var miner = document.getElementById("selectNumber").value;
+             location.href='http://localhost:4000/miner/balance/' + miner ;
+          }
+          function startMine() {
+             var miner = document.getElementById("selectNumber").value;
+             location.href='http://localhost:4000/miner/startMine/' + miner ;
+          }
+          function stopMine() {
+             var miner = document.getElementById("selectNumber").value;
+             location.href='http://localhost:4000/miner/stopMine/' + miner ;
+          }
+          function getBlockChain() {
+             var miner = document.getElementById("selectNumber").value;
+             location.href='http://localhost:4000/miner/blockchain/' + miner ;
+          }
+      </script>
+      <div class ="homeButton">
+<a href="/"><button type="button" class="btn btn-info btn-lg">Home Screen</button></a>
+</div>
+  </head>
+</body>
+</html>
