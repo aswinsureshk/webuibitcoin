@@ -1,4 +1,4 @@
-# Blockchain
+# WebUIBitcoin - Phoenix+Elixir
 
 This project provides a Web User Interface for the project www.github.com/aswinsureshk/bitcoin. This project is implemented using the Phoenix Framework for Web Application Development in Elixir. The project comprises of code written is Elixir, HTML, CSS, JavaScript. The charts are done using Chartkick : https://github.com/buren/chartkick-ex.
 
